@@ -1,0 +1,16 @@
+[EventStream]
+type = "LogstreamerInput"
+log_directory = "/data"
+file_match = '*\.log'
+
+[PayloadEncoder]
+append_newlines = false
+
+[EventStreamLocalCopy]
+type = "FileOutput"
+message_matcher = "TRUE"
+path = "/var/log/heka/dump.log"
+perm = "666"
+flush_count = 100
+flush_operator = "OR"
+encoder = "PayloadEncoder"

@@ -1,0 +1,4 @@
+version: '2'
+services:
+  heka:
+    image: raknair07/docker-heka:1
