@@ -1,7 +1,8 @@
 [EventStream]
 type = "LogstreamerInput"
 log_directory = "/data"
-file_match = '*\.log'
+file_match = '(?P<FileName>[^/]+).log'
+differentiator = ["FileName", "-logs"]
 
 [PayloadEncoder]
 append_newlines = false
