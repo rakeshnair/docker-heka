@@ -1,17 +1,19 @@
 [EventStream]
 type = "LogstreamerInput"
 log_directory = "/data"
-file_match = '(?P<FileName>[^/]+).log'
-differentiator = ["FileName", "-logs"]
+file_match = 'events\.log'
 
 [PayloadEncoder]
 append_newlines = false
 
-[EventStreamLocalCopy]
-type = "FileOutput"
+[KafkaOutput]
+type = "KafkaOutput"
 message_matcher = "TRUE"
-path = "/var/log/heka/dump.log"
-perm = "666"
-flush_count = 100
-flush_operator = "OR"
+topic = "heka_test1"
+addrs = ["%ENV[KAFKA_IP_ADDR]:9092"]
+required_acks = "WaitForAll"
+id = "heka_client1"
 encoder = "PayloadEncoder"
+
+[hekad]
+base_dir = "/usr/local/heka/db"
