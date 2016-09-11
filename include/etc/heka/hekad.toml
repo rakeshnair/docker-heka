@@ -1,8 +1,8 @@
 [EventStream]
 type = "LogstreamerInput"
-log_directory = "/data"
-file_match = '(?P<FileName>[^/]+).log'
-differentiator = ["FileName", "-logs"]
+log_directory = "%ENV[HEKA_LOG_DIR]"
+file_match = '%ENV[HEKA_FILE_MATCH]'
+differentiator = %ENV[HEKA_DIFFERENTIATOR]
 
 [PayloadEncoder]
 append_newlines = false
