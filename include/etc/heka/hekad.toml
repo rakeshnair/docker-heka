@@ -2,7 +2,7 @@
 type = "LogstreamerInput"
 log_directory = "%ENV[HEKA_LOG_DIR]"
 file_match = '%ENV[HEKA_FILE_MATCH]'
-differentiator = %ENV[HEKA_DIFFERENTIATOR]
+differentiator = ["FileName", "-logs"]
 
 [PayloadEncoder]
 append_newlines = false
