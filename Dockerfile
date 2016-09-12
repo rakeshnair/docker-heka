@@ -19,9 +19,6 @@ RUN cd /usr/local && \
 RUN mkdir /usr/local/etc/heka
 COPY include/etc/heka/hekad.toml /usr/local/etc/heka
 
-# Create log directory
-RUN mkdir /var/log/heka
-
 # Place the startup scripts
 RUN mkdir /usr/local/etc/init.d
 COPY include/etc/init.d/heka-start.sh /usr/local/etc/init.d/heka-start.sh

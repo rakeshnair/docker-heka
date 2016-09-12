@@ -20,6 +20,8 @@ The following environment variables should be set for the Heka container to run:
   - `KAFKA_CLIENT_ID`(*optional*): The id of the Kafka producer client. Defaults to hostname of the instance.
 
   More info on the `KafkaOutput` pluging available [here.](http://hekad.readthedocs.io/en/v0.10.0/config/outputs/kafka.html)
+- Environment variables required for the Heka daemon process:
+  - `HEKA_MAXPROCS`(*optional*): The total number of hyper threaded cpu cores the Heka process should use. Defaults to `2` (equivalent to one physical core)
 
 Sample usage
 ============

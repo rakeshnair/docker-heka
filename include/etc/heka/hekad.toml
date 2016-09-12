@@ -18,4 +18,4 @@ encoder = "PayloadEncoder"
 
 [hekad]
 base_dir = "/usr/local/heka/db"
-maxprocs = 2
+maxprocs = %ENV[HEKA_MAXPROCS]
