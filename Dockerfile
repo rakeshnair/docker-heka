@@ -22,10 +22,6 @@ COPY include/etc/heka/hekad.toml /usr/local/etc/heka
 # Create log directory
 RUN mkdir /var/log/heka
 
-# Create volume that will contain data to be tailed
-RUN mkdir /data && chmod 744 /data
-VOLUME /data
-
 # Place the startup scripts
 RUN mkdir /usr/local/etc/init.d
 COPY include/etc/init.d/heka-start.sh /usr/local/etc/init.d/heka-start.sh

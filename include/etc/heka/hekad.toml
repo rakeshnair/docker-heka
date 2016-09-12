@@ -1,7 +1,7 @@
 [EventStream]
 type = "LogstreamerInput"
-log_directory = "%ENV[HEKA_LOG_DIR]"
-file_match = '%ENV[HEKA_FILE_MATCH]'
+log_directory = "%ENV[DATA_DIR]"
+file_match = '%ENV[FILE_MATCH]'
 differentiator = ["FileName", "-logs"]
 
 [PayloadEncoder]
@@ -10,11 +10,12 @@ append_newlines = false
 [KafkaOutput]
 type = "KafkaOutput"
 message_matcher = "TRUE"
-topic = "heka_test1"
-addrs = ["%ENV[KAFKA_IP_ADDR]:9092"]
-required_acks = "WaitForAll"
-id = "heka_client1"
+topic = "%ENV[KAFKA_TOPIC]"
+addrs = ["%ENV[KAFKA_ADDR]"]
+required_acks = "%ENV[KAFKA_ACK]"
+id = "%ENV[KAFKA_CLIENT_ID]"
 encoder = "PayloadEncoder"
 
 [hekad]
 base_dir = "/usr/local/heka/db"
+maxprocs = 2
