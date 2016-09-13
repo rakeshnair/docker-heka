@@ -1,28 +1,22 @@
 FROM segment/base:v4
 
-RUN apt-get install -y vim
-
 # Download and place Heka binaries
-ENV HEKA_FILE_NAME heka-0_10_0-linux-amd64
-ENV HEKA_VERSION 0.10.0
-ENV HEKA_DOWNLOAD_URL https://github.com/mozilla-services/heka/releases/download/v$HEKA_VERSION/$HEKA_FILE_NAME.tar.gz
+ENV HEKA_DOWNLOAD_URL https://github.com/mozilla-services/heka/releases/download/v0.10.0/heka-0_10_0-linux-amd64.tar.gz
 ENV HEKA_MD5 89ff62fe2ccad3d462c9951de0c15e38
 
 RUN cd /usr/local && \
     curl -LO $HEKA_DOWNLOAD_URL && \
-    echo "$HEKA_MD5  $HEKA_FILE_NAME.tar.gz" | md5sum --check && \
-    echo "$HEKA_FILE_NAME.tar.gz" | xargs tar -zxf && \
-    mv $HEKA_FILE_NAME heka && \
-    rm -rf $HEKA_FILE_NAME.tar.gz
+    heka_file_name=$(echo $HEKA_DOWNLOAD_URL | sed -e "s/\(.*\)\(heka-.*\)\.tar\.gz/\2/") && \
+    echo "$HEKA_MD5  $heka_file_name.tar.gz" | md5sum --check && \
+    echo "$heka_file_name.tar.gz" | xargs tar -zxf && \
+    mv $heka_file_name heka && \
+    rm -rf $heka_file_name.tar.gz
 
-# Place the config file required for startup
-RUN mkdir /usr/local/etc/heka
+# Place Heka startup script and config file
+RUN mkdir /usr/local/etc/heka && \
+    mkdir /usr/local/etc/init.d
+
 COPY include/etc/heka/hekad.toml /usr/local/etc/heka
-
-# Place the startup scripts
-RUN mkdir /usr/local/etc/init.d
 COPY include/etc/init.d/heka-start.sh /usr/local/etc/init.d/heka-start.sh
-RUN chmod +x /usr/local/etc/init.d/heka-start.sh
 
 CMD ["bash", "-C", "/usr/local/etc/init.d/heka-start.sh"]
-

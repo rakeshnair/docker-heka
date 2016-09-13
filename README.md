@@ -21,7 +21,7 @@ The following environment variables should be set for the Heka container to run:
 
   More info on the `KafkaOutput` pluging available [here.](http://hekad.readthedocs.io/en/v0.10.0/config/outputs/kafka.html)
 - Environment variables required for the Heka daemon process:
-  - `HEKA_MAXPROCS`(*optional*): The total number of hyper threaded cpu cores the Heka process should use. Defaults to `2` (equivalent to one physical core)
+  - `HEKA_MAXPROCS`(*optional*): The total number of hyper threaded cpu cores the Heka process should use. Defaults to `1`.
 
 Sample usage
 ============
@@ -33,5 +33,6 @@ docker run -i -t \
   -e "KAFKA_ADDR=127.0.0.1:9092" \
   -e "KAFKA_ACK=WaitForAll" \
   -e "KAFKA_CLIENT_ID=heka_client_1" \
+  -e "HEKA_MAXPROCS=2" \
   --rm segment/heka
 ```
